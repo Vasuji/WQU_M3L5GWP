@@ -1,0 +1,28 @@
+\subsection{Financial Problem}
+
+The predictive modeling task explored in the study by Sagaceta Mejia et al.\ (2022) is grounded in one of the most enduring challenges in finance: forecasting the directional movement of asset prices. This problem becomes significantly more complex and nuanced when situated within the context of emerging financial markets, which differ from developed markets not only in structure and efficiency but also in data quality, investor behavior, and macroeconomic dynamics. This section articulates the precise financial problem being addressed, its relevance, and how the study proposes to tackle it through machine learning and data optimization techniques.
+
+\subsubsection{Problem Definition}
+
+The central financial question posed by the study is whether it is possible to accurately predict the direction---upward or downward---of next-day returns for stocks listed in emerging markets by using optimized technical indicators and machine learning models. Formally, this is cast as a binary classification problem, where the input is a feature vector $X_t$ composed of technical indicators up to time $t$, and the output is a binary label $y_{t+1} \in \{0, 1\}$ indicating whether the return $r_{t+1}$ is negative or positive.
+
+The objective is to develop a data-driven decision support system that enhances short-term trading strategies, portfolio rebalancing decisions, and risk management protocols. This problem has practical relevance for hedge funds, quantitative asset managers, and proprietary trading desks searching for alpha in under-explored, less efficient financial markets.
+
+\subsubsection{Motivation for Focusing on Emerging Markets}
+
+Emerging markets offer a compelling yet challenging domain for predictive modeling. While they potentially deliver higher returns due to greater risk premia, they also exhibit several characteristics that complicate forecasting:
+
+Emerging markets tend to suffer from market inefficiencies where prices may not fully incorporate all available information. These inefficiencies arise from factors such as lower liquidity, limited institutional involvement, and suboptimal information dissemination. Additionally, return series in these markets are often highly volatile, with abrupt fluctuations driven by macroeconomic shocks, political events, or currency devaluations.
+
+Regulatory uncertainty is another complicating factor. Inconsistent policy environments, capital controls, and irregular reporting standards can distort market signals. However, emerging markets are also less saturated with high-frequency trading and algorithmic strategies. This relative lack of automation implies that predictive signals, once discovered, may persist longer than in developed markets.
+
+Within this context, the study employs a combined methodology of optimized technical indicators, LASSO regression for feature selection, and feedforward neural networks for modeling nonlinear dependencies. These tools are strategically aligned to exploit the predictive inefficiencies inherent in emerging markets such as Chile, Colombia, Peru, and Mexico.
+
+\subsubsection{Broader Implications of Solving the Problem}
+
+Accurate directional forecasting in emerging markets holds several important implications. For investors, it enhances alpha generation in markets that have historically been considered less accessible and more volatile. For regulators and policymakers, predictive models can offer valuable insights into market dynamics and investor behavior, which can inform regulatory frameworks aimed at enhancing transparency and stability.
+
+From an academic standpoint, successful implementation of machine learning models in this context supports the hypothesis that nonlinear methods with optimized features can outperform traditional models. For model developers and data scientists, this problem underscores the value of domain-specific feature engineering, rigorous cross-validation, and robust optimization protocols.
+
+While no model can predict markets with certainty, the objective is to increase the probability of accurate directional classification beyond random chance. Achieving this outcome lends both statistical and economic significance to the modeling effort.
+

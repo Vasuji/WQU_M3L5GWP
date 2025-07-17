@@ -1,0 +1,21 @@
+\subsection{Methodology Understanding}
+
+A rigorous methodological framework is essential for translating raw financial data into actionable insights. In the study by Sagaceta Mejia et al. (2022), the authors structure their approach around feature engineering using optimized technical indicators, followed by the deployment of predictive models—namely LASSO regression and a feedforward neural network (FNN)—to forecast directional market movements. This section reorganizes the original “Materials and Methods” into a structured pipeline, distinguishing between data preparation and modeling methodology while offering critical reflections on the techniques employed.
+
+\subsubsection{Data Pipeline}
+
+The dataset consists of daily OHLCV (Open, High, Low, Close, Volume) data retrieved from Bloomberg for selected stocks listed in Latin American markets. The multi-year coverage provides sufficient depth for robust time-series modeling in the context of emerging markets, which are known for elevated volatility and structural inefficiencies.
+
+The raw OHLCV time series undergo several preprocessing steps to ensure data quality and modeling readiness. Missing values are imputed using forward fill techniques. Adjustments for corporate actions such as stock splits and dividend payments are applied to preserve continuity in the price series. Log-returns are calculated to stabilize variance and normalize the scale across assets. These steps collectively transform raw time series into a stationary and well-structured format suitable for machine learning applications.
+
+From the cleaned OHLCV data, a comprehensive set of technical indicators is derived to represent various aspects of market behavior. These include trend indicators such as Simple Moving Average (SMA), Exponential Moving Average (EMA), and Moving Average Convergence Divergence (MACD); momentum indicators like Relative Strength Index (RSI), Rate of Change (ROC), and the Stochastic Oscillator; volatility measures such as Average True Range (ATR) and Bollinger Band Width; and volume-related features such as On-Balance Volume (OBV) and Volume Rate of Change. Each indicator is computed over multiple parameter configurations to account for temporal dynamics and asset-specific behavior. The most predictive variants are retained based on empirical validation.
+
+The final dataset is assembled as a feature matrix where each row corresponds to a trading day and each column represents a technical feature. The binary classification target is defined as 1 if the next day’s return is positive, and 0 otherwise. All input features are standardized to have zero mean and unit variance. Lagging is applied to ensure causality and eliminate look-ahead bias. This temporal structure is essential for maintaining the integrity of the supervised learning setup.
+
+\subsubsection{Modeling Framework}
+
+LASSO (Least Absolute Shrinkage and Selection Operator) regression is first employed to perform both dimensionality reduction and predictive modeling. LASSO introduces an $L_1$ regularization term to the standard linear regression objective function, promoting sparsity in the coefficient estimates. This feature selection capability is crucial in high-dimensional financial data, where many technical indicators may be noisy or redundant. The selected features represent the subset of indicators that contribute most meaningfully to forecasting next-day returns.
+
+Once LASSO has filtered the features, a feedforward neural network (FNN) is trained on the resulting input space. The network consists of an input layer corresponding to the number of LASSO-selected features, two hidden layers with ReLU activation functions, and a final output layer with a sigmoid activation that produces the probability of a positive return. Training is conducted using the binary cross-entropy loss function and the Adam optimizer. Dropout and early stopping are applied to control overfitting, especially given the relatively small sample size of daily equity data.
+
+The dataset is divided into training and test sets using an 80-20

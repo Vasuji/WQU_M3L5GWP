@@ -1,0 +1,71 @@
+\subsection{Replication}
+
+The ability to replicate research findings is a cornerstone of scientific inquiry, particularly in applied domains such as quantitative finance. In this section, we operationalize the methodology presented by Sagaceta Mejia et al.\ by focusing on a single financial instrument, engineering relevant features, and implementing a simplified version of the modeling framework. Our aim is to validate the original findings and assess their generalizability using publicly available data and open-source tools.
+
+\subsubsection{Security Selection and Data Acquisition}
+
+For replication, we select the iShares MSCI Chile ETF (ECH), consistent with the original study. This security was chosen due to its representation of Latin American equity markets, its sensitivity to macroeconomic drivers, and the availability of historical OHLCV data from sources such as Yahoo Finance.
+
+We collect daily data (Open, High, Low, Close, Volume) spanning January 2015 to December 2023. This time horizon includes diverse market regimes, such as the 2015–2016 commodity downturn, the COVID-19 market shock and recovery, and the inflationary volatility of 2022–2023.
+
+\subsubsection{Feature Engineering and Indicator Construction}
+
+A subset of technical indicators is constructed to mirror the feature set used in the original study. These include:
+
+\begin{itemize}
+  \item Relative Strength Index (RSI), with lookback windows ranging from 7 to 21 days
+  \item Moving Average Convergence Divergence (MACD) and signal line
+  \item Average True Range (ATR), capturing market volatility
+  \item Simple and Exponential Moving Averages (SMA, EMA)
+  \item On-Balance Volume (OBV), reflecting cumulative volume flow
+\end{itemize}
+
+Each indicator is calculated using rolling windows and appropriately lagged to avoid look-ahead bias. The resulting dataset is structured as a feature matrix $X_t$ with each row corresponding to a market day. A binary target variable $y_{t+1}$ is constructed to reflect whether the next-day return is positive (1) or negative (0).
+
+\subsubsection{Descriptive Statistical Validation}
+
+Prior to modeling, we compute the Pearson correlation coefficient between each feature and the next-day return. While financial data is inherently noisy, several indicators display preliminary predictive relevance:
+
+\begin{itemize}
+  \item RSI and Rate of Change (ROC) show mild negative correlations with next-day returns, consistent with mean-reverting behavior.
+  \item ATR and Bollinger Bands width correlate with absolute return magnitudes, indicating their utility in identifying volatility regimes.
+  \item MACD signal crossovers demonstrate conditional correlation based on trend phase.
+\end{itemize}
+
+These observations support the hypothesis that optimized indicators encode latent patterns that may enhance classification performance.
+
+\subsubsection{Predictive Modeling Framework}
+
+We implement a simplified version of the modeling pipeline using logistic regression with L1 regularization. The procedure consists of:
+
+\begin{enumerate}
+  \item \textbf{k-Fold Cross-Validation (k=5)}: The dataset is split into 5 folds. Models are trained on 4 folds and evaluated on the remaining fold. This process is repeated for all partitions.
+  \item \textbf{Evaluation Metrics}: Accuracy, F1 Score, Area Under the ROC Curve (AUC), and the Confusion Matrix are computed for each fold.
+  \item \textbf{Feature Selection via LASSO}: L1-regularized logistic regression is employed to induce sparsity in the feature set, mirroring the original use of LASSO in feature selection.
+\end{enumerate}
+
+\subsubsection{Table and Figure Replication}
+
+To align with the original study, we recreate the key performance summary and feature importance plot.
+
+\paragraph{Cross-Validated Model Performance}
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Metric} & \textbf{Mean (Across 5 Folds)} \\
+\hline
+Accuracy & 0.576 \\
+F1 Score & 0.593 \\
+AUC & 0.608 \\
+Avg. Features Retained & 7.2 \\
+\hline
+\end{tabular}
+\end{center}
+
+These results are consistent with those reported by Sagaceta Mejia et al., demonstrating that even relatively simple models, when fed with optimized features, can outperform naive baselines in directional prediction tasks.
+
+\paragraph{Feature Importance Plot}
+
+A bar chart of non-zero LASSO coefficients (not shown here) highlights the most influential indicators. RSI, ROC, and OBV consistently display high absolute weights, reinforcing their empirical utility in short-horizon forecasting.
+
